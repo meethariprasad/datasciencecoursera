@@ -1,0 +1,116 @@
+---
+title: 'Practical Machine Learning Peer-graded Assignment: Prediction Assignment'
+author: "Hari Prasad"
+date: "January 13, 2017"
+output: html_document
+---
+Background
+===========
+
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, our goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+
+Data
+====
+
+The training data for this project are available here:
+
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+The test data are available here:
+
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+
+
+
+
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. 
+
+Question
+==========
+Problem turns out in to how accourately you can predict callse variable using other parameters. In other words, given the other censory data can you predict if you are doing execricize properly or not and if not which category you are most likelyto fall in to.  
+
+That is, exactly according to the specification (Class A), throwing the elbows to the front (Class B), lifting the dumbbell only halfway (Class C), lowering the dumbbell only halfway (Class D) and throwing the hips to the front (Class E).
+
+Read more: http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises#ixzz4VeBaOZ77
+
+Exploratory Data Analysis
+=========================
+
+```{r}
+setwd("D:/DataScience/Practical Machine Learning/Week4/project/")
+training<-read.csv("pml-training.csv")
+testing<-read.csv("pml-testing.csv")
+str(training)
+```
+
+1. Data contains lots of NA Values and #DIV/0! values.  We need to handle them.  
+2. There are too many vany variables and there is high posibility that many are contributing as noise. So removing Near Zero Variance Variables.
+3.  Also remove the variables which has mostly NA values.
+4. Remove all others identification related variables.
+5. Replicate the same in Test Set as well  
+
+
+```{r}
+library(knitr)
+library(caret)
+library(rpart)
+library(rpart.plot)
+library(rattle)
+library(randomForest)
+library(corrplot)
+library("e1071")
+library("nnet")
+set.seed(500)
+PartTrain  <- createDataPartition(training$classe, p=0.7, list=FALSE)
+TrainSet <- training[PartTrain, ]
+TestSet  <- training[-PartTrain, ]
+NZV <- nearZeroVar(TrainSet)
+TrainSet <- TrainSet[, -NZV]
+TestSet  <- TestSet[, -NZV]
+AllNA    <- sapply(TrainSet, function(x) mean(is.na(x))) > 0.95
+TrainSet <- TrainSet[, AllNA==FALSE]
+TestSet  <- TestSet[, AllNA==FALSE]
+TrainSet <- TrainSet[, -(1:5)]
+TestSet  <- TestSet[, -(1:5)]
+#Validating that TestSet and TrainSet maintain same number of columns.
+dim(TestSet)
+dim(TrainSet)
+```
+
+Predictive Model Selection
+===========================
+As it is a classification problem, we will start with Decision Tree and will compare it with Random Forest performance using confusion matrix.   
+
+Cross Validation will be used for Random Forest for Training Control.
+
+
+1. Decision Tree
+=========================
+```{r}
+model_tree <- rpart(classe~.,data=TrainSet,method="class")
+predict_tree<-predict(model_tree,TestSet,type="class")
+confusionMatrix(predict_tree,TestSet$classe)
+```
+
+
+2. Random Forest
+=========================
+Using Cross Validation for trainControl.
+```{r}
+tc <- trainControl(method="cv", number=3, verboseIter=FALSE)
+modFitRandForest <- train(classe ~ ., data=TrainSet, method="rf",trControl=tc)
+predict_Rf <- predict(modFitRandForest, newdata=TestSet)
+confusionMatrix(predict_Rf, TestSet$classe)
+```
+
+Model Selection
+============================
+As you can see from confusion matrix, accuracy of Random Forest is near to 99%. Hence Random Forest will be chosen as model to be applied.
+
+Application on Training Set
+=============================
+Random Forest Model will be applied on traaining data set given to find the predicted values.
+```{r}
+final_prediction <- predict(modFitRandForest, newdata=testing)
+final_prediction
+```
