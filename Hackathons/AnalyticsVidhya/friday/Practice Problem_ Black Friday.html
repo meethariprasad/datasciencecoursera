@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://datahack.analyticsvidhya.com/contest/black-friday/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=" Practice Problem: Black Friday | Knowledge and Learning">
+    <meta name="author" content="">
+    <meta property="og:url" content="https://datahack.analyticsvidhya.com/contest/black-friday/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="">
+    <meta property="og:description" content=" Practice Problem: Black Friday | Knowledge and Learning">
+    <meta property="og:image" content="https://datahack.analyticsvidhya.com/media/contest_icon/BlackFriday_PP_icon.png">
+    <title> Practice Problem: Black Friday </title>
+
+    <link rel="icon" id="favicon" type="image/png" href="https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg"><link rel="apple-touch-icon" href="https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg"><link rel="apple-touch-icon" sizes="76x76" href="https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg"><link rel="apple-touch-icon" sizes="114x114" href="https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg"><link rel="apple-touch-icon" sizes="144x144" href="https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg">
+
+    <link href="./Practice Problem_ Black Friday_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Practice Problem_ Black Friday_files/font-awesome.min.css" type="text/css">
+    <link href="./Practice Problem_ Black Friday_files/sb-admin-2.css" rel="stylesheet">
+    <link href="./Practice Problem_ Black Friday_files/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./Practice Problem_ Black Friday_files/notebook.css">
+    <link rel="stylesheet" href="./Practice Problem_ Black Friday_files/main.css">
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:src" content="https://datahack.analyticsvidhya.com/media/contest_icon/BlackFriday_PP_icon.png">
+    <meta name="twitter:site" content="@AnalyticsVidhya">
+    <meta name="twitter:title" content="Practice Problem: Black Friday | Knowledge and Learning">
+    <meta name="twitter:description" content="&lt;blockquote&gt;&lt;p&gt;Nothing ever becomes r...">
+    <meta name="twitter:creator" content="@pulkit_pahwa1">
+    <link href="./Practice Problem_ Black Friday_files/simple-sidebar.css" rel="stylesheet">
+    <link href="./Practice Problem_ Black Friday_files/contest.css" rel="stylesheet">
+
+    <style>
+        * {
+          font-family: 'Droid Sans', sans-serif;
+        }
+        .btn-simple{
+          border: 1px solid grey; 
+        }
+        .btn-simple: hover{
+          color: white !important;
+          background-color: grey !important;
+        }
+        
+   #wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+#leftCol a{
+    color:white;
+}
+
+#wrapper.toggled {
+    padding-left: 80px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 80px;
+    width: 0;
+    opacity : 0.7;
+    height: 100%;
+    margin-left: -80px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 80px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 80px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 10px;
+    line-height: 1.5;
+
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+    height:60px;
+    padding-top:10px;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 80px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 80px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 80px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        margin-left:60px;     
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+        margin-left:60px;   
+    }
+}
+i{
+    font-size : 25px;
+}
+@media(max-width:768px) {
+    #wrapper {
+        padding-left: 80px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 80px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+        margin-left:30px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+    #pad0
+    {
+      margin-right:20px;
+      padding:0px;
+    }
+    #sidebar li a{
+      color:white;
+    }
+    #sidebar li a:hover{
+      color:white;
+      background-color:#09090b;
+    }
+    #sidebar li.active {
+      border:0 #0289d8 solid;
+      border-right-width:5px;
+      color:white;
+      background-color:black;
+    }
+    a.back-to-top {
+      height:60px;
+      width: 60px;
+      border-radius:60px;
+      border:8px solid black;
+      color:black;
+      text-decoration:none;
+      text-ifndent: -9999px;
+      font-size:40px;
+      vertical-align:middle;
+      padding:2px;
+      padding-left:3px;
+      float:center;
+
+      position: fixed;
+      z-index: 999;
+      right: 20px;
+      bottom:20px;
+      background:white;
+    }
+
+
+        @media screen and (min-width:1000px){
+            #navbar-brand {
+              margin-left:80px;
+            }
+        }
+    </style>
+    <link href="./Practice Problem_ Black Friday_files/base.css" rel="stylesheet">
+</head>
+
+<body style="">
+<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#fff;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" id="navbar-brand" href="https://www.analyticsvidhya.com/" target="_blank" style="padding:0px;">
+        <img src="./Practice Problem_ Black Friday_files/analyticsvidhya.jpg" style="height: 45px;margin-top: 3px;" alt="Analaytics Vidya">
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+        <li><a href="https://www.analyticsvidhya.com/blog/">Blog</a></li>
+        <li><a href="https://www.analyticsvidhya.com/jobs/">Jobs</a></li>
+        <li><a href="https://discuss.analyticsvidhya.com/">Discuss</a></li>
+        <li><a href="https://www.analyticsvidhya.com/learning-paths-data-science-business-analytics-business-intelligence-big-data/">Learning Paths</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" style="margin-right:75px;">
+        <li class="dropdown">
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="https://datahack.analyticsvidhya.com/users">All Users</a></li>
+            <li><a href="https://datahack.analyticsvidhya.com/students">Students</a></li>
+          </ul>
+        </li>
+        <li><a href="https://datahack.analyticsvidhya.com/contest/all/">Hackathons</a></li>
+        
+          
+            <li class="" title="Notifications">
+              <a role="button" class="dropdown-toggle">
+                <i class="fa fa-bullhorn" style="font-size:20px;margin-right:2px;"></i><span class="badge" id="notification_count" style="display: none;">0</span><span class="hidden-md hidden-lg" style="padding-left:20px;">Notifications</span>
+              </a>
+            </li>
+            <li class="" title="Messages">
+              <a role="button" class="dropdown-toggle" href="https://datahack.analyticsvidhya.com/teams/invites">
+                <i class="fa fa-comments" style="font-size:20px;margin-right:2px;"></i><span class="badge" style="color: white; background-color: rgb(51, 122, 183); display: none;" id="message_count">0</span><span class="hidden-md hidden-lg" style="padding-left:20px;">Messages</span>
+              </a>
+            </li>
+          
+          <li class="dropdown">
+          <a role="button" class="dropdown-toggle" data-toggle="dropdown" style="padding:0px; padding-top:8px;">
+          
+            <h1 style="margin:0px;background-color:#4285F4;padding-top:5px;color:white;height:40px;width:40px;border-radius:20px;font-size:26px;text-align:center;">H</h1>
+          
+          </a>
+          <ul class="dropdown-menu hidden-xs hidden-sm">
+            <li><a href="https://datahack.analyticsvidhya.com/user">Profile</a></li>
+            
+            <li><a href="https://datahack.analyticsvidhya.com/user/update">Edit Profile</a></li>
+            <li><a href="https://datahack.analyticsvidhya.com/user/preferences/">Preferences</a></li>
+            
+            <li><a href="https://datahack.analyticsvidhya.com/accounts/logout/">Logout</a></li>
+          </ul>
+        </li>
+        <li class="hidden-md hidden-lg"> <a href="https://datahack.analyticsvidhya.com/user">Profile</a></li>
+        
+        <li class="hidden-md hidden-lg"><a href="https://datahack.analyticsvidhya.com/user/update">Edit Profile</a></li>
+        <li><a class="hidden-md hidden-lg" href="https://datahack.analyticsvidhya.com/user/preferences/">Preferences</a></li>
+        
+        <li class="hidden-md hidden-lg"><a href="https://datahack.analyticsvidhya.com/accounts/logout/">Logout</a>  </li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div style="margin-top: 60px;">
+
+  <div class="container-fluid">
+    <div class="row">
+        <div style="background: rgb(8, 30, 46); height: 2461px; font-size: 1.2em; margin-top: 0px;" class="col-sm-2 col-lg-2 col-md-2 col-xs-2" id="left_side_bar">
+    <ul style="color:white;list-style : none;padding:0px;margin-top:20px" class="sidebar" id="ll">
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#rules" style="text-decoration:none;color:white;">
+              <i class="fa fa-info-circle" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Rules</span>
+          </a>
+         </li>
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/teams/black-friday/create" style="text-decoration:none;color:white;">
+              <i class="fa fa-group" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Team</span>
+          </a>
+         </li>
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#problem_statement" style="text-decoration:none;color:white;">
+              <i class="fa fa-question" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Problem Statement</span>
+          </a>
+         </li>
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#data_dictionary" style="text-decoration:none;color:white;">
+              <i class="fa fa-database" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Data</span>
+          </a>
+         </li>
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#solution_checker" style="text-decoration:none;color:white;">
+              <i class="fa fa-check" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Solution Checker</span>
+          </a>
+         </li>
+      
+        
+          <li style="height:50px;padding:10px;" id="fetch_final">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#activity_id" style="text-decoration:none;color:white;">
+              <i class="fa fa-anchor" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">Final Solution</span>
+          </a>
+         </li>
+      
+        
+        <li style="height:50px;padding:10px;">
+        
+          <a href="https://datahack.analyticsvidhya.com/contest/black-friday/lb" style="text-decoration:none;color:white;">
+              <i class="fa fa-trophy" style="margin-right:10px;"></i>
+              <span class="second_input hidden-sm hidden-xs">LeaderBoard</span>
+          </a>
+         </li>
+      
+    </ul>
+  </div>
+
+      <div class="col-sm-10 col-xs-10 col-md-10 col-lg-10 " style="padding-left:20px;" id="main_content">
+        
+    <img src="./Practice Problem_ Black Friday_files/BlackFriday_PP_banner.png" alt="Cover image for Practice Problem: Black Friday" style="width:100%">
+
+
+        <div style="margin-bottom:10px;width:100px;height:10px;"></div>
+
+  
+     
+       <button type="button" class="btn btn-success col-sm-2 col-sm-offset-5 col-xs-offset-5 col-md-offset-5 col-lg-offset-5" id="participate" disabled="">Registered </button>
+     
+  
+
+<table class="col-md-8 table table-striped hidden-md hidden-lg" style="margin-top:20px;;">
+    <tbody><tr style="line-height:2.3">
+        <td class="col-md-5"><b>Starts at </b></td>
+        <td><div class="localtime">Tue Jul 19 2016 00:00:00 GMT+0530 (India Standard Time)</div></td>
+    </tr>
+    <tr style="line-height:2.3">
+        <td class="col-md-5"><b>Closes on </b></td>
+        <td><div class="localtime">Fri Mar 31 2017 23:59:59 GMT+0530 (India Standard Time)</div></td>
+    </tr>
+    <tr style="line-height:2.3">
+        <td class="col-md-5"><b>Mode  </b></td>
+        <td>Online</td>
+    </tr>
+    
+    <tr style="line-height:2.3">
+        <td><b># Participants</b></td>
+        <td>2811</td>
+    </tr>
+    <tr style="line-height:2.3">
+        <td class="col-md-5" style="vertical-align:middle"><b>Prizes </b></td>
+        <td><p>Knowledge and Learning</p> </td>
+    </tr>
+    
+</tbody></table>
+
+<table class="col-md-8 table table-striped hidden-sm hidden-xs" style="margin-top:20px;;">
+    <tbody><tr style="line-height:2.3">
+        <td class="col-md-2"><center><b>Starts at </b></center></td>
+        <td class="col-md-2"><center><b>Closes on </b></center></td>
+        <td class="col-md-2"><center><b>Mode  </b></center></td>
+        <td class="col-md-2"><center><b>Participants</b></center></td>
+    
+    <td class="col-md-2"><center><b>Prizes </b></center></td>
+    </tr>
+    <tr style="line-height:2.3">
+        <td><div class="localtime">Tue Jul 19 2016 00:00:00 GMT+0530 (India Standard Time)</div></td>
+        <td><div class="localtime">Fri Mar 31 2017 23:59:59 GMT+0530 (India Standard Time)</div></td>
+        <td><center>Online</center></td>
+        <td><center>2811</center></td>
+    
+        <td><center><p>Knowledge and Learning</p> </center></td>
+    </tr>
+    
+</tbody></table>
+
+
+<center><h4><div id="countdown" class="col-sm-12 col-xs-12 col-md-12 col-lg-12"><center>Contest ends in 53<small>days</small>: 5<small>hours</small>: 36<small>minutes</small>: 36<small>seconds</small></center></div></h4></center>
+
+
+        <div class="col-sm-12 col-xs-12 col-md-9 col-lg-9">
+        <input type="hidden" name="purpose" id="purpose" value="practice">
+        
+          
+            <h2 id="rules">Rules</h2>
+<p></p><ul><li>One person cannot participate with more than one user accounts.</li><li>You are free to use any tool and machine you have rightful access to.</li><li>You can use any programming language or statistical software.</li><li>You are free to use solution checker as many times as you want.</li></ul><p><br> &nbsp;</p><h2 id="resources">Resources</h2><ul><li>Data Exploration is the core of machine learning competition. To understand more about it, <a href="http://www.analyticsvidhya.com/blog/2016/01/guide-data-exploration/" target="_blank">click here</a>.</li><li>You can refer introduction course to participate in machine learning competition on <a href="https://www.datacamp.com/community/open-courses/introduction-to-python-machine-learning-with-analytics-vidhya-hackathons" target="_blank">DataCamp</a> designed by Analytics Vidhya.</li><li>You can participate in workshop "<a href="http://datahack.analyticsvidhya.com/contest/experiments-with-data-4" target="_blank">Experiments with Data</a>" to start your data science journey using Excel, R or Python</li></ul><p></p>
+          
+          <!-- conditions starts here -->
+          
+        
+          
+        
+
+      
+             <hr id="problem_statement">
+<h2 id="problem-statement">Problem Statement</h2>
+
+  
+       <p>A retail company “ABC Private Limited” wants to understand the customer purchase behaviour (specifically, purchase amount) against various products of different categories. They have shared purchase summary of various customers for selected high volume products from last month.<br>The data set also contains customer demographics (age, gender, marital status, city_type, stay_in_current_city), product details (product_id and product category) and Total purchase_amount from last month.</p><p>Now, they want to build a model to predict the purchase amount of customer against various products which will help them to create personalized offer for customers against different products.</p>  
+  
+
+
+             <hr>
+<h2 id="data_dictionary">Data</h2>
+
+<table class="table-striped" style="margin-left:20px"><tbody><tr style="height:40px;"><th style="width:150px;height:40px"><b>Variable</b></th><th class="col-md-9">Definition</th></tr><tr style="height:40px;"><td style="width:150px"><b>User_ID</b></td><td class="col-md-9">User ID</td></tr><tr style="height:40px;"><td style="width:150px"><b>Product_ID</b></td><td class="col-md-9">Product ID</td></tr><tr style="height:40px;"><td style="width:150px"><b>Gender</b></td><td class="col-md-9">Sex of User</td></tr><tr style="height:40px;"><td style="width:150px"><b>Age</b></td><td class="col-md-9">Age in bins</td></tr><tr style="height:40px;"><td style="width:150px"><b>Occupation</b></td><td class="col-md-9">Occupation (Masked)</td></tr><tr style="height:40px;"><td style="width:150px"><b>City_Category</b></td><td class="col-md-9">Category of the City (A,B,C)</td></tr><tr style="height:40px;"><td style="width:150px"><b>Stay_In_Current_City_Years</b></td><td class="col-md-9">Number of years stay in current city</td></tr><tr style="height:40px;"><td style="width:150px"><b>Marital_Status</b></td><td class="col-md-9">Marital Status</td></tr><tr style="height:40px;"><td style="width:150px"><b>Product_Category_1</b></td><td class="col-md-9">Product Category (Masked)</td></tr><tr style="height:40px;"><td style="width:150px"><b>Product_Category_2</b></td><td class="col-md-9">Product may belongs to other category also (Masked)</td></tr><tr style="height:40px;"><td style="width:150px"><b>Product_Category_3</b></td><td class="col-md-9">Product may belongs to other category also (Masked)</td></tr><tr style="height:40px;"><td style="width:150px"><b>Purchase</b></td><td class="col-md-9">Purchase Amount (Target Variable)</td></tr></tbody></table><p style="margin-left:20px;">Your model performance will be evaluated on the basis of your prediction of the purchase amount for the test data (test.csv), which contains similar data-points as train except for their purchase amount. Your submission needs to be in the format as shown in "SampleSubmission.csv". </p><p style="margin-left:20px;">We at our end, have the actual purchase amount for the test dataset, against which your predictions will be evaluated. Submissions are scored on the root mean squared error (RMSE). RMSE is very common and is a suitable general-purpose error metric. Compared to the Mean Absolute Error, RMSE punishes large errors:</p><img src="./Practice Problem_ Black Friday_files/rmse.png" style="align:center; margin-left:100px;"><p style="margin-left:20px;">Where y hat is the predicted value and y is the original value.</p><h4 style="margin-left:20px;">Please note : </h4><ul><li>Public leaderboard is based on 30% of the test dataset, while 70% of the dataset is used for Private Leaderboard.</li><li>The final results would be declared only on Private Leaderboard</li></ul>
+
+<div style="height:20px"></div>
+<div>
+<div class="col-md-2">
+   
+     <a href="https://datahack.analyticsvidhya.com/contest/black-friday/media/test_zip/test_HujdGe7.zip" target="blank" style="color:green;text-decoration:none;"><i class="fa fa-download"></i> Test File</a>
+   
+</div>
+<div class="col-md-2">
+  
+    <a href="https://datahack.analyticsvidhya.com/contest/black-friday/media/train_zip/train_oSwQCTC.zip" style="color:green;text-decoration:none;" target="blank"><i class="fa fa-download"></i> Train File</a>
+  
+</div>
+<div class="col-md-4" style="">
+   <a href="https://datahack.analyticsvidhya.com/contest/black-friday/media/sample_submission/Sample_Submission_Tm9Lura.csv" style="color:green;text-decoration:none;" target="blank"><i class="fa fa-download"></i> Sample Submissions</a>
+</div>
+
+</div>
+
+
+             
+<hr>
+<h2 id="solution_checker" style="margin-top:30px">Solution Checker</h2>
+
+  <div class="row" style="margin-top:30px;">
+    <form action="https://datahack.analyticsvidhya.com/contest/black-friday/" method="post" enctype="multipart/form-data" class="form-horizontal" id="form1">
+        <input type="hidden" name="csrfmiddlewaretoken" value="1FCyzXZm1SYo3pspjyHADjEbUmWDdRng">
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="col-sm-4 col-md-3 control-label">Code File </label>
+            <div class="col-sm-8">
+                <input type="file" name="code_file" class="form-control" id="code_file1" required="">
+            </div>
+        </div>
+        <div class="form-group">
+           <label for="exampleInputEmail1" class="col-sm-4 col-md-3 control-label">Solution File*<br>(.csv or .zip file)</label>
+           <div class="col-sm-8">
+               <input type="file" name="solution_file" class="form-control" id="solution_file1" required="">
+           </div>
+       </div>
+       <div class="form-group">
+           <label for="exampleInputEmail1" class="col-sm-4 col-md-3 control-label">Solution Description<br> (max : 180 chars)*</label>
+           <div class="col-sm-8">
+               <input type="text" name="message" class="form-control" placeholder="Solution Description (for your interest)" value="" maxlength="90" id="message1">
+           </div>
+       </div>
+       <button type="button" id="sub1" class="btn btn-primary col-md-6 col-md-offset-3 col-lg-offset-3 col-lg-6 col-sm-12 col-xs-12">Add Solution</button>
+    </form>
+  </div>
+
+  
+
+
+
+
+      
+      
+
+
+
+          <!-- conditions ends here -->
+
+          
+        <div style="height:100px;"></div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+          
+
+<div style="margin-top:30px">
+   <button type="button" class="btn col-md-12 btn-primary" id="slack_invite">Join Slack Live Chat</button>
+</div>
+
+
+        </div>
+      </div>
+        <a href="https://datahack.analyticsvidhya.com/contest/black-friday/#" class="back-to-top fa fa-arrow-up"></a>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#d43f3a;">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title" id="modal-header" style="color:white;">Error </h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal-body" style="color:black;">Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#449d44;">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title" id="modal-header1" style="color:white;">New Data Added</h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal-body1" style="color:black;">Please check the data set. New Data has been added along with the previous one. New file name : Alcohol consumption.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal3" role="dialog" style="width:80%;margin-left:10%">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#449d44;">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title" id="modal-header" style="color:white;"><center>Set Final Submissions</center></h4>
+        </div>
+        <div class="modal-body" style="height:400px;overflow-y : auto;width:100%">
+           <p id="final_submission_set_success"></p>
+           <form action="https://datahack.analyticsvidhya.com/contest/black-friday/" method="post" id="form-submissions">
+               <input type="hidden" name="csrfmiddlewaretoken" value="1FCyzXZm1SYo3pspjyHADjEbUmWDdRng">
+               <table class="table-striped" id="" style="padding-left:20px;width:100%;">
+                 <tbody><tr style="height:40px;">
+                     
+                     <th style="" class="col-sm-5">Answer Commit Message</th>
+                     <th style="" class="col-sm-2">Score</th>
+                     <th style="" class="col-sm-3 ">Time of Submission</th>
+                     <th style="" class="col-sm-2">Code File</th>
+                     <th style="padding-right:10px;">Select</th>
+                     
+                </tr>
+               </tbody></table>
+               <table class="table-striped" id="data" style="padding-left:20px;width:100%;">
+               </table>
+               <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" style="margin-top:30px;" id="submit">Set final Submission</button><table id="final_1">
+                 
+               </table>
+               <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" style="margin-top:30px;" id="submit_2">Set Submissions to check private score</button><table id="final_2">
+                 
+               </table>
+           </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="container" style="">
+  <div class="row">
+    
+  
+  </div>
+</div>
+</div>
+
+
+
+<footer class="footer">
+  <div class="container" style="padding-bottom:30px;">
+    <div class="col-sm-12 col-md-4">
+      <h3><span style="border-bottom:2px solid white;padding-bottom:4px;;color:white;">ABOUT US</span></h3>
+      <p style="margin-top:30px;">For those of you, who are wondering what is “Analytics Vidhya”, “Analytics” can be defined as the science of extracting insights from raw data. The spectrum of analytics starts from capturing data and evolves into using insights / trends from this data to make informed decisions.</p>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <h3><span style="border-bottom:2px solid white;padding-bottom:4px;;color:white;">Latest Posts</span></h3>
+      <div class="post">
+        <div class="footer-image">
+          <img src="./Practice Problem_ Black Friday_files/Comp-1-0-00-00-00-83x63.jpg">
+        </div>
+        <div class="texts">
+          <a href="https://www.analyticsvidhya.com/blog/2015/09/compelling-reasons-compete-data-hackathon/" style="color:white;">
+            <h4>3 Compelling reasons why you must compete in Data Hackathon 3.x</h4>
+            <h6 class="author">KUNAL JAIN </h6>
+          </a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="footer-image">
+          <img src="./Practice Problem_ Black Friday_files/orward-Selection-Techniques-for-Ensemble-Modeling-83x63.jpg" alt="">
+        </div>
+        <div class="texts">
+          <a href="https://www.analyticsvidhya.com/blog/2015/09/selection-techniques-ensemble-modelling/" style="color:white;">
+            <h4>Learn to use Forward Selection Techniques for Ensemble Modeling</h4>
+            <h6 class="author">TAVISH SRIVASTAVA </h6>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <h3><span style="border-bottom:2px solid white;padding-bottom:4px;color:white;">Quick Links</span></h3>
+      <ul style="list-style: none;margin-left:0;padding-top:30px;">
+        <li><a target="_blank" href="https://www.analyticsvidhya.com/">Home</a></li>
+        <li><a href="https://www.analyticsvidhya.com/about-me/">About Us</a></li>
+        <li><a target="_blank" href="https://www.analyticsvidhya.com/about-me/team/">Our Team</a></li>
+        <li><a target="_blank" href="https://www.analyticsvidhya.com/privacy-policy/">Privacy Policy</a></li>
+        <li><a target="_blank" href="https://www.analyticsvidhya.com/refund-policy/">Refund Policy</a></li>
+        <li><a target="_blank" href="https://www.analyticsvidhya.com/terms/">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-12 bottom" style="background-color: black; padding: 20px;">
+    <p class="col-sm-4-offset">© Copyright 2016 Analytics Vidhya </p>
+  </div>
+</footer>
+
+
+    <script async="" src="./Practice Problem_ Black Friday_files/analytics.js.download"></script><script src="./Practice Problem_ Black Friday_files/jquery.js.download"></script>
+    <script src="./Practice Problem_ Black Friday_files/jquery.min.js.download"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="./Practice Problem_ Black Friday_files/bootstrap.min.js.download"></script>
+    
+<script type="text/javascript" src="./Practice Problem_ Black Friday_files/generate_left_side_bar.js.download"></script>
+<script>
+$(document).ready(function(){
+var height = $("#main_content").height();
+$("#left_side_bar").height(height);
+});
+
+var purpose = $('#purpose').attr('value');
+var sp_purpose = ['visualize','excel'];
+var cd_purpose = ['workshop','normal','learnup','practice','case_study'];
+$("#fetch_final").click(function(){
+    $("#final_1").css("display","block");
+    $("#submit").css("display","block");
+    $("#final_2").css("display","none");
+    $("#submit_2").css("display","none");
+    fetch_final();
+});
+var od_purpose = ['normal','learnup','practice','hiring'];
+var ot_purpose = ['workshop','visualize','excel','mcq','case_study','blogathon','ama'];
+function fetch_final(){
+    console.log("fetch final ");
+    $("#myModal3 .modal-dialog").css("height",$(window).height()*0.7);
+    $("#myModal3 .modal-dialog").css("width",$(window).width()*0.7);
+    $.ajax({
+       type : 'GET',
+       url : '/contest/black-friday/get',
+       dataType : 'json',
+       success : function(data){
+         if(data["error"] == "true")
+         {
+             console.log(data);
+         }
+         else{
+           $("#data").html("");
+           for(i=0;i<data["submissions"].length;i++)
+           {
+           if ($.inArray(purpose, ot_purpose ) > -1){
+               if(data["submissions"][i][3]) 
+                  {               
+                    $("#data").append("<tr style = 'height:40px;'><td class = 'col-sm-6' style = 'padding-right:30px'>" + data["submissions"][i][0] + "</td><td class = 'col-sm-2'>" + Math.round(data["submissions"][i][1] *100000)/100000+ "</td><td class = 'col-sm-4'>" + data["submissions"][i][2] + "</td><td class = 'col-sm-2'> <input type = 'radio' class = 'radio_buttons' checked value = '" + data["submissions"][i][4] +"' name = 'final1'></td></tr>");
+                  }
+                   
+                  else
+                  {               
+                    $("#data").append("<tr style = 'height:40px;'><td class = 'col-sm-6'>" + data["submissions"][i][0] + "</td><td class = 'col-sm-2'>" + Math.round(data["submissions"][i][1] *100000)/100000+ "</td><td class = 'col-sm-4'>" + data["submissions"][i][2]+ "</td><td class = 'col-sm-2'><input type = 'radio' value = '"+ data['submissions'][i][4] + "' class = 'radio_buttons' name = 'final1'></td>></tr>");
+                  }
+              }
+              else {
+                  if (data["submissions"][i][6] && ($.inArray(purpose, od_purpose ) > -1)){
+                        if(data["submissions"][i][3]) 
+                        {               
+                          $("#data").append("<tr style = 'height:40px;'><td class = 'col-sm-5' style = 'padding-right:30px'>" + data["submissions"][i][0] + "</td><td class = 'col-sm-2'>" + Math.round(data["submissions"][i][1] *100000)/100000+ "</td><td class = 'col-sm-3'>" + data["submissions"][i][2] + "</td><td class = 'col-sm-3'>&#10004;</td><td class = 'col-sm-1'><input type = 'radio' class = 'radio_buttons'  checked value = '"+ data['submissions'][i][4] +"' name = 'final1'></td></tr>");
+                        }
+                         
+                        else
+                        {               
+                          $("#data").append("<tr style = 'height:40px;'><td class = 'col-sm-5'>" + data["submissions"][i][0] + "</td><td class = 'col-sm-2'>" + Math.round(data["submissions"][i][1] *100000)/100000+ "</td><td class = 'col-sm-3'>" + data["submissions"][i][2]+ "</td><td class = 'col-sm-3'>&#10004;</td><td class = 'col-sm-1'><input type = 'radio' value = '"+ data['submissions'][i][4] + "' class = 'radio_buttons' name = 'final1'></td>></tr>");
+                        }
+                    }
+                    else {
+                          $("#data").append("<tr style = 'height:40px;'><td class = 'col-sm-5'>" + data["submissions"][i][0] + "</td><td class = 'col-sm-2'>" + Math.round(data["submissions"][i][1] *100000)/100000+ "</td><td class = 'col-sm-3'>" + data["submissions"][i][2] + "</td><td class = 'col-sm-3' >&#10008;</td><td class = 'col-sm-1'><input type = 'radio' value = '"+ data['submissions'][i][4] + "' class = 'radio_buttons' name = 'final1' disabled></td></tr>");
+                      }
+              }
+           }  
+               $("#myModal3").modal("show");
+         }
+       },
+       error  : function(data){
+          alert("error occured");
+       }
+    });
+}
+
+
+
+
+if ($.inArray(purpose, cd_purpose ) > -1)
+{
+    
+$(document).ready(function(){
+  $.ajax({
+    type: "GET",
+    url: "./countdowns/",
+    success: function(result){
+      obj = JSON.parse(result)
+          if (obj.time_to_start > 0){
+            var time_remaining = obj.time_to_start;
+            message = "Contest starts in ";
+          }
+          else if (obj.time_to_end > 0){
+            message = "Contest ends in ";
+            var time_remaining = obj.time_to_end;
+          }
+
+      if (time_remaining ){
+      window.setInterval(function(){
+          time_remaining =  time_remaining - 1
+          if (time_remaining==0){
+            location.reload(true);
+          }
+          days = (Math.floor(time_remaining/86400));
+          hours = (Math.floor((time_remaining-days*86400)/3600));
+          minutes = (Math.floor((time_remaining % 3600)/60));
+          seconds = (Math.floor(time_remaining%60));
+          if (days < 1)
+          {
+            message_text = message + hours + "<small>hours</small>: " + minutes + "<small>minutes</small>: " + seconds  + "<small>seconds</small>";
+          }
+          else{
+            message_text = message + days + "<small>days</small>: "  + hours + "<small>hours</small>: " + minutes + "<small>minutes</small>: " + seconds  + "<small>seconds</small>";
+          }
+          $("#countdown").html( "<center>" + message_text + "</center>" ); 
+      }, 1000);
+      }
+    }
+  });
+});
+
+    }
+$(".localtime").each(function() {
+  d = new Date($(this).text())
+  $(this).html(d)
+})
+
+
+if ($.inArray(purpose, sp_purpose ) > -1)
+{
+    $("#submit").click(function(){
+  var data = new FormData($('#form-submissions').get(0));
+  $.ajax({
+      url: '/problem/black-friday/update-final-solution/',
+      type: 'POST',
+      data: data,
+      cache: false,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+         if(data["error"] == "true")
+         {
+            $("#myModal3").modal("hide");
+            $("#modal-header1").html("Error");
+            $("#modal-body").html(data["message"]);
+            $('#myModal').modal('show');
+         }
+         else{
+             $("#modal-body3").html("Your final submission has been set");
+             $("#modal-header3").html("Success");
+             $("#myModal3").modal('show');
+         }
+      },
+      error : function(data){
+            $("#myModal3").modal("hide");
+            $("#modal-body").html("Some error occured");
+            $('#myModal').modal('show');
+      }
+  });
+});
+$("#submit_2").click(function(){
+  var data = new FormData($('#form-submissions').get(0));
+  $.ajax({
+      url: '/problem/black-friday/update-multiple-final-solution/',
+      type: 'POST',
+      data: data,
+      cache: false,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+         if(data["error"] == "true")
+         {
+            $("#myModal3").modal("hide");
+            $("#modal-header1").html("Error");
+            $("#modal-body").html(data["message"]);
+            $('#myModal').modal('show');
+         }
+         else{
+            $("#myModal3").modal("hide");
+            $("#modal-header1").html("Success");
+            $("#modal-body1").html(data["message"]);
+            $("#myModal1").modal('show');         
+         }
+      },
+      error : function(data){
+            $("#myModal3").modal("hide");
+            $("#modal-body").html("Some error occured");
+            $('#myModal').modal('show');
+      }
+  });
+});
+
+    }
+else{
+  $("#selection_done").click(function(){
+  var message = "Are you sure you want to set this submission as your final submission. If yes, then you'll have to add your code file for this submission. ";
+  var user_confirmation  = confirm(message);
+  if (user_confirmation)
+  {
+     add_code_file_form();
+  }
+
+});
+$("#submit").click(function(){
+  var data = new FormData($('#form-submissions').get(0));   
+  $.ajax({
+      url: '/problem/black-friday/update-final-solution/',
+      type: 'POST',
+      data: data,
+      cache: false,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+         if(data["error"] == "true")
+         { 
+            $("#myModal3").modal("hide");
+            $("#modal-header1").html("Error");
+            $("#modal-body").html(data["message"]);
+            $('#myModal').modal('show');
+         }
+         else{
+             <!-- fetch_final_for_multiple_selections(); -->
+             $("#myModal3").modal("hide");
+             $("#modal-header1").html("Success");
+             $("#modal-body1").html("Your Final Sumbission has been set successfully.");
+             $('#myModal1').modal('show');
+         }
+      },
+      error : function(data){
+            $("#myModal3").modal("hide");
+            $("#modal-body").html("Unable to connect to backend");
+            $('#myModal').modal('show');
+      }
+  });
+});
+
+
+function add_code_file_form(){
+    $("#myModal3 .modal-dialog").css("height",$(window).height()*0.7);
+    $("#myModal3 .modal-dialog").css("width",$(window).width()*0.7);
+}
+
+
+}
+ $('a[href*=#]:not([href=#])').click(function() {
+     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+       var target = $(this.hash);
+       target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+       if (target.length) {
+         $('html,body').animate({
+           scrollTop: target.offset().top - 50
+         }, 1000);
+         return false;
+       }
+     }
+ });
+   var names;
+   $("#sub1").click(function(){
+       file_checker("url1");
+   });
+
+  $("#sub2").click(function(){
+         file_checker("url2");
+     });
+
+   $(document).keypress(function(e) {
+       if(e.which == 13) {
+          e.preventDefault();
+          file_checker();
+       }
+   });
+
+   function file_checker(url_name) {
+       var solution_file = $("#solution_file1").val();
+       var commit_message = $("#message1").val();
+       var solution_file_check = $('#solution_file1').val().split('.').pop().toLowerCase();
+
+       if(solution_file == "")
+       {
+            $("#modal-body").html("Solution File is required. Please upload solution File");
+            $('#myModal').modal('show');
+       }
+             
+                if($.inArray(solution_file_check, ['csv']) == -1) {
+                     $("#modal-body").html("Invalid Solution File . Please upload a valid solution File. <br/>Only csv files are allowed");
+                     $('#myModal').modal('show');
+                }
+             
+
+       else if(commit_message== "")
+       {
+            $("#modal-body").html("Message is required. Please add a message to your Solution");
+            $('#myModal').modal('show');
+       }
+       else
+       {
+            var a = "<img src = '/media/profile_photos/oie_91149170D2m4jGB.gif' class = '' style = 'width:250px;margin-left:30%'><div class='progress progress-striped active col-md-12 col-sm-12 col-xs-12 col-lg-12'><div class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div></div>"
+            $("#modal-body1").html(a)
+            $("#modal-header1").html("Uploading");
+            $('#myModal1').modal('show');
+            upload(url_name);
+       }
+   }
+   function upload(url_name){
+       var data = new FormData($('form').get(0));
+       var lnk ;
+       if (url_name == 'url2') {
+         lnk = '/problem/IZVOQKANEYTPYW6/submit-excel/';
+         }
+         else{
+         lnk = '/problem/IZVOQKANEYTPYW6/add-programming-answer/';
+         }
+       $.ajax({
+         xhr: function()
+         {
+           var xhr = new window.XMLHttpRequest();
+           //Upload progress
+           xhr.upload.addEventListener("progress", function(evt){
+             if (evt.lengthComputable) {
+                var percentComplete = evt.loaded * 100/ evt.total ;
+                $('.progress-bar').css('width', percentComplete+'%').attr('aria-valuenow', percentComplete);
+
+               //Do something with upload progress
+               console.log(percentComplete);
+             }
+           }, false);
+           //Download progress
+           xhr.addEventListener("progress", function(evt){
+             if (evt.lengthComputable) {
+               var percentComplete = evt.loaded / evt.total;
+               //Do something with download progress
+               console.log(percentComplete);
+             }
+           }, false);
+           return xhr;
+         },
+         url : lnk,
+         type: 'POST',
+         data: data,
+         cache: false,
+         processData: false,
+         contentType: false,
+         success: function(data) {
+            $(".hid").css({"display":"none"});
+            $("#solution_file1").val("");
+            $("#message1").val("");
+            if(data["error"] == "true")
+            {
+               console.log(data["message"]);
+               $("#myModal1").modal('hide');
+               $("#modal-body").html(data["message"]);
+               $('#myModal').modal('show');
+            }
+            else{
+             console.log(data["message"]);
+               $("#modal-body1").html(data["message"]);
+               $("#modal-header1").html("Success");
+               $('#myModal1').modal('show');
+            }
+            setTimeout(function(){
+              window.location.reload(1);
+            }, 2000);
+         },
+         error : function(data){
+             console.log(data["message"]);
+            $('#myModal1').modal('hide');
+            $(".hid").css({"display":"none"});
+            $("#solution_file1").val("");
+            $("#message1").val("");
+            $("#modal-body").html("Some error occured. Please try after some time.");
+            $('#myModal').modal('show');
+         }
+
+     });
+   }
+
+
+$("#slack_invite").click(function(){
+     var data = {"email":"", "first_name":"meethariprasad", "csrfmiddlewaretoken":"1FCyzXZm1SYo3pspjyHADjEbUmWDdRng"};
+     $.ajax({
+         type : "POST",
+         url : "/slack",
+         data : data,
+         success : function(data)
+              {
+                 if (data["data"]["ok"])
+                 {
+                     $("#modal-body1").html("You have been successfully invited. Please check your inbox for slack invite");
+                     $("#modal-header1").html("Success");
+                     $('#myModal1').modal('show');
+                 }
+                 else{
+                     $("#modal-body").html(data["data"]["error"]);
+                     $('#myModal').modal('show');
+                 }
+              }
+     });
+});
+
+$(document).ready(function(){
+    $.get( "/contest/black-friday/forum", function( data ) {
+    	if ( data["topics"]){
+       for(i=0;i<data["topics"].length;i++)
+       {
+           $("#discuss_posts").append("<tr style = 'line-height:2.5em;'><td><a href = 'https://discuss.analyticsvidhya.com/t/" + data["topics"][i][1] + "' target = 'blank'>" + data["topics"][i][0]  + "</a></td></tr>")      ;
+       }
+       }
+       var height = $("#main_content").height();
+       $("#left_side_bar").height(height);
+    });
+});
+
+
+</script>
+
+    <script>
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+         ga('create', 'UA-67190105-1', 'auto');
+         ga('send', 'pageview');
+    </script>
+    <script src="./Practice Problem_ Black Friday_files/platform.js.download" async="" defer="" gapi_processed="true"></script>
+    <script>
+      $(document).ready(function(){
+        $.get("/teams/count", function(data){
+          if(data["invites"] == 0){
+            $("#message_count").css({"display": "none"});
+          }
+          if(data["notifications"] == 0){
+            $("#notification_count").css({"display": "none"});
+          }
+          if(data["contests"] == 0){
+            $("#hackathons_count").css({"display": "none"});
+          }
+          $("#message_count").html(data["invites"]);
+          $("#notification_count").html(data["notifications"]);
+          $("#hackathons_count").html(data["contests"]);
+        });
+      });
+    </script>
+
+
+
+</body></html>
