@@ -176,7 +176,6 @@
             
 # 
 # #Step3:Ensemble using Approximate Weighted Average (Or NN with 1 hiddenlayer?)========
-# Not yet done
             submit.predict.bestdl1 <- as.data.frame(h2o.predict(gbm1, testing.h2o[vip.imp]))
             submit.predict.bestdl1$predict<-ifelse(submit.predict.bestdl1$predict<0,0,submit.predict.bestdl1$predict)
             summary(submit.predict.bestdl1$predict)
