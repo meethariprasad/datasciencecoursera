@@ -5,6 +5,7 @@ library(qdapRegex)
 library(stringr)
 library(qdap)
 cleansample<-function(x){
+  
   sample<-x
   #Solve Encoding Issues
   sample <- iconv(sample, 'UTF-8', 'ASCII')
@@ -51,5 +52,7 @@ cleansample<-function(x){
   sample<-(na.omit(sample)) 
   sample <- sample[!apply(is.na(sample) | sample == "", 1, all),]
   sample<-as.data.frame(sample, stringsAsFactors = FALSE)
+  sample<-trimws(stripWhitespace(str_replace_all(sample, "[^[:alnum:]]", " ")))
+  sample<-rm_non_words(sample)
   return(sample)
 }
