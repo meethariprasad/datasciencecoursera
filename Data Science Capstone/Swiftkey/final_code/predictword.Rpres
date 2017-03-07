@@ -1,0 +1,33 @@
+Predict Next Word
+========================================================
+author: Hari Prasad
+date: March-07-2017
+autosize: true
+
+Objective & Final Product
+========================================================
+
+This project is intended to create a product which can predict next word based on the words entered earlier(you might have already seen it in modern keyboards in mobile!).  
+
+Following links will take you to the application and codebase, and following slides after this briefly explain how this product has been built.
+
+- [Application](https://meethariprasad.shinyapps.io/predictword/): This link takes you to shinyapps where product is hosted.
+- Code: This link takes you to github repository where final code is hosted.
+
+
+Approach
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Data Load and Cleansing
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Model Evaluvation & Selection
+========================================================
+
