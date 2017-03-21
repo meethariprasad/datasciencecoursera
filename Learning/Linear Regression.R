@@ -317,7 +317,7 @@ I<-0:qf(0.95, DFM, DFE)
 #Check if F belongs to the interval
 F==I
 #All are False.
-#You can reject the Full Hypothesis.
+#You can reject the Null Hypothesis.
 
 # p-value: 2.046e-06 not supporting Null Hypothesis.
 PF<-1-pf(F, DFM, DFE, lower.tail=F)
