@@ -338,7 +338,8 @@ set.seed(42)
 N <- 1e4
 d <- 10
 X <- matrix(rnorm(N*d), ncol=d)
-theta <- rep(5, d+1)
+#I have taken 1 as my theta. Let us see how it goes.
+theta <- rep(1, d+1)
 eps <- rnorm(N)
 y <- cbind(1, X) %*% theta + eps
 dat <- data.frame(y=y, x=X)
