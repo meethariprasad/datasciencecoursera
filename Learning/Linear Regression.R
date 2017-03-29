@@ -332,5 +332,17 @@ PF
 #Elastic Net
 
 #Gradient Descent Method.
-
+#You can examine using sgd package.
+library(sgd)
+set.seed(42)
+N <- 1e4
+d <- 10
+X <- matrix(rnorm(N*d), ncol=d)
+theta <- rep(5, d+1)
+eps <- rnorm(N)
+y <- cbind(1, X) %*% theta + eps
+dat <- data.frame(y=y, x=X)
+sgd.theta <- sgd(y ~ ., data=dat, model="lm")
+#Coefficients
+sgd.theta
 
