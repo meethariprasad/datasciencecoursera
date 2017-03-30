@@ -332,18 +332,18 @@ PF
 #Elastic Net
 
 #Gradient Descent Method.
-#You can examine using sgd package.
-library(sgd)
-set.seed(42)
-N <- 1e4
-d <- 10
-X <- matrix(rnorm(N*d), ncol=d)
-#I have taken 1 as my theta. Let us see how it goes.
-theta <- rep(1, d+1)
-eps <- rnorm(N)
-y <- cbind(1, X) %*% theta + eps
-dat <- data.frame(y=y, x=X)
-sgd.theta <- sgd(y ~ ., data=dat, model="lm")
-#Coefficients
-sgd.theta
+#You can examine using gradDescent package.
+library(gradDescent)
+##################################
+## Learning and Build Model with GD
+## load R Package data
+data(gradDescentRData)
+## get z-factor data
+dataSet <- gradDescentRData$CompressilbilityFactor
+## split dataset
+splitedDataSet <- splitData(dataSet)
+## build model with GD
+GDmodel <- GD(splitedDataSet$dataTrain)
+#show result
+print(GDmodel)
 
