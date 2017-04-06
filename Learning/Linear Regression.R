@@ -7,9 +7,9 @@ setwd("D:/DataScience/1Data Science Specialization Capstone/RMachine Learning")
 #Data: http://people.sc.fsu.edu/~jburkardt/datasets/regression/x31.txt
 #The correct solution is (-3,4,-1).
 
-library(xlsx)
-#I saved the the data in second sheet of regression.xlsx file.
-data.df<-read.xlsx("regression.xlsx",2,header = F)
+library(readr)
+data.df <- read_csv("https://raw.githubusercontent.com/meethariprasad/datasciencecoursera/master/Learning/lr.csv")
+
 #Remove unneccesary Index(rownumber) column position
 data.df<-data.df[2:5]
 
