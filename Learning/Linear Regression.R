@@ -331,18 +331,81 @@ PF
 #Elastic Net
 
 #Gradient Descent Method.
-#You can examine using gradDescent package.
-library(gradDescent)
-##################################
-## Learning and Build Model with GD
-## load R Package data
-data(gradDescentRData)
-## get z-factor data
-dataSet <- gradDescentRData$CompressilbilityFactor
-## split dataset
-splitedDataSet <- splitData(dataSet)
-## build model with GD
-GDmodel <- GD(splitedDataSet$dataTrain)
-#show result
-print(GDmodel)
 
+#Read this before you start anything
+#http://www.clockbackward.com/2009/06/18/ordinary-least-squares-linear-regression-flaws-problems-and-pitfalls/
+#Best Source for Reading:https://web.stanford.edu/~mrosenfe/soc_meth_proj3/matrix_OLS_NYU_notes.pdf
+# http://stat.smmu.edu.cn/DOWNLOAD/ebook/econometric.pdf 
+
+#Data: http://people.sc.fsu.edu/~jburkardt/datasets/regression/x31.txt
+#The correct solution is (-3,4,-1).
+
+library(readr)
+data.df <- read_csv("https://raw.githubusercontent.com/meethariprasad/datasciencecoursera/master/Learning/lr.csv")
+
+#Remove unneccesary Index(rownumber) column position
+data.df<-data.df[2:5]
+#Independent Variables +intercept term
+X<-cbind(Intercept=rep(1,nrow(data.df)),data.df[1:3])
+X<-as.matrix(X)
+#Dependent Variable
+Y<-as.matrix(data.df[4])
+
+#Batch Gradient Descent Algorithm
+
+#We need to change it in vectorized format.
+
+#Start with a Random parameters say 0,0,0,0 to begin with for 3 independent variables & Intercept.
+theta<-list()
+#Iteration<-1
+
+theta[[1]]<-as.matrix(c(0,0,0,0))
+#Start with a random learning rate say 0.1
+alpha<-0.01
+#Calculate initial cost function cost  
+#Cost function for multivariate regression
+#J(theta) =1/2m*transpose((X)%*%theta-Y)%*%(X%*%theta-Y)
+J<-numeric()
+#predictedvalue=h(x) over theta
+m=nrow(X)
+predictedvalue<-X%*%theta[[1]]
+actualvalue<-Y
+#Square of a Column vector Dot product of two vectors
+sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+J[1]<-(1/(2*m))*sum_of_squared_error
+#920.25 is initial cost
+
+#Update all parameters simultaneously as per Gradient Descent Algorithm
+
+temp<-numeric()
+#The updates are going wrong as multiplication of additional term x on each row of h-y is needed
+temp[1]<-theta[[1]][[1]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[,1]))
+
+temp[2]<-theta[[1]][[2]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[,2]))
+
+temp[3]<-theta[[1]][[2]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[,3]))
+
+temp[4]<-theta[[1]][[2]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[,4]))
+
+theta[[2]]<-as.matrix(temp)
+
+#J[2]
+#We will update theta with newly find one. theta 2
+
+predictedvalue<-X%*%theta[[2]]
+actualvalue<-Y
+#Square of a Column vector Dot product of two vectors
+sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+J[2]<-(1/(2*m))*sum_of_squared_error
+#J[2] drastically reduced to 96.7 Nice improvement. We are going good.
+
+#Similiary find J[3], J[4] and so on till whatever iteration you want
+#After one phase cost function will not decrease beyond 0.001
+#That is where we say we reached global minimum of convex function J
+
+#Next Step is to vectorize above operation and making it generic for whatever number of input variables you input.
+
+#After this next step is to work on Mini Batch
+#After that Stochastic Gradient Descent
+#Regularization
+#Logistic Regression
