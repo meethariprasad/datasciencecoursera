@@ -3,7 +3,6 @@
 #Best Source for Reading:https://web.stanford.edu/~mrosenfe/soc_meth_proj3/matrix_OLS_NYU_notes.pdf
 # http://stat.smmu.edu.cn/DOWNLOAD/ebook/econometric.pdf 
 
-setwd("D:/DataScience/1Data Science Specialization Capstone/RMachine Learning")
 #Data: http://people.sc.fsu.edu/~jburkardt/datasets/regression/x31.txt
 #The correct solution is (-3,4,-1).
 
