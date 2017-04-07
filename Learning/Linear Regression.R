@@ -489,13 +489,18 @@ k
 #Problem 1: In Big Data, the Batch Gradient Descent will be slow because you can see that it is calculating sum over 1 to m for every
 #Parameter update!
 
+#Solution 1:
+#After this we will see Stochastic Gradient Descent
+
+
+#After this next step is to work on Mini Batch Gradient Descent
+
+
+
 #Problem 2: The existance of outliers and biased variables tend to affect regularization. We need to penalize our model to reduce these effects.
 
 #Solutions
 
-#Solution 1:
-#After this next step is to work on Mini Batch
-#After that Stochastic Gradient Descent
 
 #Solution 2:
 #Regularization
@@ -505,5 +510,3 @@ k
 #Lasso Regression
 
 #Elastic Net
-
-
