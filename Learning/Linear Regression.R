@@ -324,12 +324,6 @@ PF
 
 #What Next?
 
-#Ridge Regression
-
-#Lasso Regression
-
-#Elastic Net
-
 #Gradient Descent Method.
 
 #Read this before you start anything
@@ -387,6 +381,7 @@ temp[3]<-theta[[1]][[2]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[
 
 temp[4]<-theta[[1]][[2]]-(alpha/m)*sum((X%*%theta[[1]]-actualvalue)*as.matrix(X[,4]))
 
+
 theta[[2]]<-as.matrix(temp)
 
 #J[2]
@@ -403,9 +398,112 @@ J[2]<-(1/(2*m))*sum_of_squared_error
 #After one phase cost function will not decrease beyond 0.001
 #That is where we say we reached global minimum of convex function J
 
-#Next Step is to vectorize above operation and making it generic for whatever number of input variables you input.
+#Wanna do all above four steps in a single shot!?
+#Have fun with Linear Algebra!
 
+theta[[2]]<-theta[[1]]-(alpha/m)*t(t(X%*%theta[[1]]-actualvalue)%*%X)
+
+predictedvalue<-X%*%theta[[2]]
+actualvalue<-Y
+#Square of a Column vector Dot product of two vectors
+sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+J[2]<-(1/(2*m))*sum_of_squared_error
+
+#Let us loop it over.
+
+#Step 1 Populate Initial Values of Theta and Cost
+theta[[1]]<-as.matrix(c(0,0,0,0))
+predictedvalue<-X%*%theta[[1]]
+actualvalue<-Y
+sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+J[1]<-(1/(2*m))*sum_of_squared_error
+
+#Mention How many interations you need.
+
+iterations<-2
+#Step 2: loop it Over to get Theta iterations+1 and J iterations+1
+for(i in 1:iterations){
+  j<-i+1
+  theta[[j]]<-theta[[i]]-(alpha/m)*t(t(X%*%theta[[i]]-actualvalue)%*%X)
+  
+  predictedvalue<-X%*%theta[[j]]
+  actualvalue<-Y
+  #Square of a Column vector Dot product of two vectors
+  sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+  J[j]<-(1/(2*m))*sum_of_squared_error
+}
+
+#Let us make a function out of it.
+#A function which will return us a list of theta and J values for each list.
+#Input for the function will be Matrix X with Intercept, Matrix Y, iterations
+
+get_gradient<-function(X,Y,iterations,alpha){
+  
+  m<-nrow(X)
+  #Step 1 Populate Initial Values of Theta and Cost
+  theta<-list()
+  theta[[1]]<-as.matrix(rep(0,ncol(X)))
+  predictedvalue<-X%*%theta[[1]]
+  actualvalue<-Y
+  sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+  J[1]<-(1/(2*m))*sum_of_squared_error
+  
+  iterations<-iterations
+  #Step 2: loop it Over to get Theta iterations+1 and J iterations+1
+  for(i in 1:iterations){
+    j<-i+1
+    theta[[j]]<-theta[[i]]-(alpha/m)*t(t(X%*%theta[[i]]-actualvalue)%*%X)
+    
+    predictedvalue<-X%*%theta[[j]]
+    actualvalue<-Y
+    #Square of a Column vector Dot product of two vectors
+    sum_of_squared_error<-(t(predictedvalue-actualvalue)%*%(predictedvalue-actualvalue))
+    J[j]<-(1/(2*m))*sum_of_squared_error
+  }
+  
+  results<-list()
+  results[[1]]<-theta
+  results[[2]]<-J
+  return(results)
+  
+}
+
+#Set for high iteration. Observe that Coefficients stop changing much and also cost value.
+k<-get_gradient(X,Y,iterations=1000,alpha=0.01)
+#Plot your cost values from result.
+plot(k[[2]]) 
+##The correct solution is (-3,4,-1). Let us see if GD is giving us
+k
+#You can see that stable coefficients are almost near to what we expected.
+# [[1]][[1001]]
+# X5
+# Intercept -1.0845496
+# X2        -2.9008000
+# X3         3.9478248
+# X4        -0.9344622
+
+#Congrats. We successfully implemented Gradient Descent for Multiple Linear Regression. Awesome!
+
+#There are few of problems though!
+
+#Problem 1: In Big Data, the Batch Gradient Descent will be slow because you can see that it is calculating sum over 1 to m for every
+#Parameter update!
+
+#Problem 2: The existance of outliers and biased variables tend to affect regularization. We need to penalize our model to reduce these effects.
+
+#Solutions
+
+#Solution 1:
 #After this next step is to work on Mini Batch
 #After that Stochastic Gradient Descent
+
+#Solution 2:
 #Regularization
 #Logistic Regression
+#Ridge Regression
+
+#Lasso Regression
+
+#Elastic Net
+
+
