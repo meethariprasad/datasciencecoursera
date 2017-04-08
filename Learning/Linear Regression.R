@@ -639,7 +639,7 @@ new_s[[1]]
 
     
     #You can see manually done compare and via loop producing same results. Great!
-    theta[[1]][,2]
+    s[[2]][[1]][,2]
     Compare
     #The correct solution is (-3,4,-1) for theta.X2,X3,X4.
     
