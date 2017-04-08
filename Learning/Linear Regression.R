@@ -486,11 +486,153 @@ k
 
 #There are few of problems though!
 
-#Problem 1: In Big Data, the Batch Gradient Descent will be slow because you can see that it is calculating sum over 1 to m for every
-#Parameter update!
+#There are few of problems though!
+
+#Problem 1: In Big Data, the Batch Gradient Descent will be slow because you can see that 
+#it is calculating sum over 1 to m for every time single Parameter updates.
+
+#Means if there are 10 rows and 2 parameters then in one iteration it is multiplication and sum
+#operation is roughly 10(rows)*2(parameters)*2(iterations)
+
+
 
 #Solution 1:
 #After this we will see Stochastic Gradient Descent
+
+#The logic is instead of calculating sum for all train examples for one parameter update,
+#start updating the parameter for once row of training example.
+#Now calculate the cost for that one training row with new theta values.
+#Go for next row and update the theta values and calculate the cost for that row.
+#Like this in one iteration, you will update the parameter m times, which is number of rows.
+#Plot the cost to see if it converges.
+#If it is not converging go for one more iteration.
+
+#Remember that since we are adjusting theta for every row, cost might increase in between.
+#Then it will decrease in some cases.
+#Then it goes near to global optima and moves around there.
+#And yes, by randomly shuffling the rows, you might hit luck earlier in your iterations day!
+
+#Let us start with row 1, shall we? And the story begins
+#Cost for each row: Cost(theta,row(x,y))=(1/2)row(h(x)-y)^2
+#Train Cost function:J(theta)<-(1/m)sum over 1 to m(Cost(theta,row(x,y)))
+#How to update theta?
+
+#Repeat iterations
+  #for i = 1 to number of rows{
+        #theta(j)<-theta(j)-learningrate(h(x)-y)x(j)
+        #j is the columnnumber, 0 to n, 0 is for intercept
+        # }
+
+    #All right. Once we do code it in simple way, then we will see vectorized operations.
+    iterations<-1
+    alpha<-0.01
+    m<-nrow(X)
+    theta<-list()
+    theta[[1]]<-as.matrix(c(0,0,0,0))
+    alpha<-0.01
+    #First row, start with first column j
+    i=1
+    j=1
+    #First row predicted value
+    h_xi<-t(theta[[i]])%*%as.matrix(X[i,])
+    #First Row actual value
+    Y[i,]
+    #Check for Cost before updating theta values
+    Cost<-numeric()
+    #Cost<-(1/2)row(h(x)-y)^2
+    Cost[i]<-(1/2)*(h_xi-Y[i,])^2
+    ##First Column(Intecept), First Row value
+    X[i,j]
+    #J=1 gives our first intercept coefficient change for row 1.
+    j=1
+    theta[[i+1]]<-matrix()
+    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+    #We need to update 3 more parameter updates for row 1 considering we have 4 independent variables
+    j=2
+    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+    j=3
+    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+    j=4
+    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+    theta[[i+1]]<-as.matrix(theta[[i+1]])
+    #Store this first iteration to check when you create loop to verify theta values.
+    Compare<-theta[[i+1]]
+
+#Continue the same process above for all rows and plot the cost value.
+#In case of millions of rows, take the average of say 1000 rows and see plot makes sense.
+#If not see with 5000 or 10000 rows average plot
+#If the graph shows diverging change learning rate.
+#And run for more iterations if needed! It is expected to get in one pass itself the optimal values.
+
+#Ok. You can always vectorize the code to reduce the number of lines. We will check that later.
+#Let us make a function out of it.
+
+get_sgd<-function(X,Y,rounds,alpha){
+    theta<-list()
+    Cost<-list()
+    J<-list()
+    rounds<-rounds
+    alpha<-alpha
+  for(iterations in 1:rounds){
+        #We need to find theta for each row.#So we are expecting a matrices with 10 coulumns and 4 rows
+        Cost[[iterations]]<-matrix(0,nrow =nrow(Y),ncol = nrow(Y))
+        #Initialize theta iterations and update the first column with lastest update
+        theta[[iterations]]<-matrix(0, ncol = 1, nrow = ncol(X))
+        if(iterations>1){
+          k<-iterations-1
+          theta[[iterations]][,1]<-theta[[k]][,nrow(Y)+1]
+        }
+      for(i in 1:nrow(Y)){
+          h_xi<-X%*%(as.matrix(theta[[iterations]][,i]))
+          diff<-h_xi-Y
+          Cost[[iterations]][,i]<-(1/2)*(diff)^2
+          theta[[iterations]]<-cbind(theta[[iterations]],as.matrix(theta[[iterations]][,i])-alpha*t(diff[i,]%*%X[i,]))
+      }
+        #Store Cost Function J
+        J[[iterations]]<-colSums(Cost[[iterations]])/(2*m)
+  }
+    result_list<-list()
+    result_list[[1]]<-J
+    result_list[[2]]<-theta
+    result_list[[3]]<-Cost
+    return(result_list)
+}#End of function
+
+s<-get_sgd(X=X,Y=Y,rounds = 10,alpha = 0.001)
+
+#Watch out for last few columns of results to see diverging or converging
+#s[[1]] : J Values
+s[[1]] 
+#s[[2]] : Theta Values
+s[[2]][[3]][,11]
+#[1] -0.2003791 -2.9100875  3.3814986 -0.9413313
+
+#You can see the result is almost near to the correct solution is (-3,4,-1) for theta.X2,X3,X4.
+#Don't try to put effort to over fit it as stochastic gradient J goes in and around global minima
+# Briefly, when the learning rates {\displaystyle \eta } \eta decrease with an appropriate rate, 
+# and subject to relatively mild assumptions, stochastic gradient descent converges almost surely 
+# to a global minimum when the objective 
+# function is convex or pseudoconvex, and otherwise converges almost surely to a local minimum
+
+#Awesome. You can celebrate saying you had fun with SGD. Stochastic
+#But why that word stochasitc?
+#That is because random shuffling rule as step 1.
+#We have not put that in out function code which can be done with one line of code
+#in the begining of function X<-X[sample(nrow(X)),]
+
+    
+    #You can see manually done compare and via loop producing same results. Great!
+    theta[[1]][,2]
+    Compare
+    #The correct solution is (-3,4,-1) for theta.X2,X3,X4.
+    
+    #You can see that in first iteration we have not yet reached there!
+    #Might be needing more iterations or less learning rate. We will see.
+    #Calculate cost for each row.
+
+    #Ok. Let us put all in a loop over iterations. Shall we?
+    
+    
 
 
 #After this next step is to work on Mini Batch Gradient Descent
@@ -510,3 +652,6 @@ k
 #Lasso Regression
 
 #Elastic Net
+
+
+
