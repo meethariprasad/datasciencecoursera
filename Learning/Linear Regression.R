@@ -469,30 +469,41 @@ get_gradient<-function(X,Y,iterations,alpha){
 }
 
 #Set for high iteration. Observe that Coefficients stop changing much and also cost value.
-k<-get_gradient(X,Y,iterations=1000,alpha=0.01)
+k<-get_gradient(X,Y,iterations=30,alpha=0.01)
 #Plot your cost values from result.
 plot(k[[2]]) 
-##The correct solution is (-3,4,-1). Let us see if GD is giving us
-k
+#As you can see that after 3rd iteration it starts to converge.
+#But remember GD doesn't immediately reach to to global minima but reaches near to it.
+##The correct solution is (-3,4,-1). Let us see if GD is giving us or how near it can go.
+k[[1]][[3]]
 #You can see that stable coefficients are almost near to what we expected.
-# [[1]][[1001]]
+# k[[1]][[3]]
 # X5
-# Intercept -1.0845496
-# X2        -2.9008000
-# X3         3.9478248
-# X4        -0.9344622
+# Intercept -0.113822
+# X2        -2.951618
+# X3         3.205256
+# X4        -0.722127
+
+#See what reducing the learning rate does to convergence.
+k2<-get_gradient(X,Y,iterations=1000,alpha=0.001)
+#Plot your cost values from result.
+plot(k2[[2]]) 
+plot(k2[[2]][c(1:100)]) 
+#It is pretty slow convergence. Isn't it? But it reaches for sure.
+k2[[1]][[30]]
+
+
 
 #Congrats. We successfully implemented Gradient Descent for Multiple Linear Regression. Awesome!
 
 #There are few of problems though!
 
-#There are few of problems though!
 
 #Problem 1: In Big Data, the Batch Gradient Descent will be slow because you can see that 
-#it is calculating sum over 1 to m for every time single Parameter updates.
+#it is calculating sum over 1 to m for every time for single Parameter updates.
 
-#Means if there are 10 rows and 2 parameters then in one iteration it is multiplication and sum
-#operation is roughly 10(rows)*2(parameters)*2(iterations)
+#Instead of this how about updating parameters for each row, hence eliminating the sum operation
+#But isn't it goint to be more costly to calculate theta parameters for every row?
 
 
 
@@ -503,14 +514,26 @@ k
 #start updating the parameter for once row of training example.
 #Now calculate the cost for that one training row with new theta values.
 #Go for next row and update the theta values and calculate the cost for that row.
-#Like this in one iteration, you will update the parameter m times, which is number of rows.
+#Like this in one iteration, you will update the theta m times, which is number of rows.
 #Plot the cost to see if it converges.
 #If it is not converging go for one more iteration.
 
-#Remember that since we are adjusting theta for every row, cost might increase in between.
+#Remember that since we are adjusting theta for every row than overall, 
+#cost might increase in between.
 #Then it will decrease in some cases.
 #Then it goes near to global optima and moves around there.
 #And yes, by randomly shuffling the rows, you might hit luck earlier in your iterations day!
+
+#Again to recap: What is the difference again getween GD and SGD?
+#In GD: Every iteration means updating only one new theta value.
+#You will continue iterations and find theta untill you find cost value converges.
+#In every iterations entire matrix of data X gets multiplied with previous theta value.
+#Since it is only one theta update per iteration it might take multiple iterations to converge.
+#Also remember that there is sum of all row costs has to happen for each theta calculations.
+
+#In SGD: Every iteration means theta gets updated as many times as rows.
+#Means if there are 1,00,000 rows, theta(remember theta is not 1, but all parameter matrix) 
+#gets updated 1,00,000 times per iteration.
 
 #Let us start with row 1, shall we? And the story begins
 #Cost for each row: Cost(theta,row(x,y))=(1/2)row(h(x)-y)^2
@@ -518,45 +541,50 @@ k
 #How to update theta?
 
 #Repeat iterations
-  #for i = 1 to number of rows{
-        #theta(j)<-theta(j)-learningrate(h(x)-y)x(j)
-        #j is the columnnumber, 0 to n, 0 is for intercept
-        # }
+#for i = 1 to number of rows{
+#theta(j)<-theta(j)-learningrate(h(x)-y)x(j)
+#j is the columnnumber, 0 to n, 0 is for intercept
+# }
 
-    #All right. Once we do code it in simple way, then we will see vectorized operations.
-    iterations<-1
-    alpha<-0.01
-    m<-nrow(X)
-    theta<-list()
-    theta[[1]]<-as.matrix(c(0,0,0,0))
-    alpha<-0.01
-    #First row, start with first column j
-    i=1
-    j=1
-    #First row predicted value
-    h_xi<-t(theta[[i]])%*%as.matrix(X[i,])
-    #First Row actual value
-    Y[i,]
-    #Check for Cost before updating theta values
-    Cost<-numeric()
-    #Cost<-(1/2)row(h(x)-y)^2
-    Cost[i]<-(1/2)*(h_xi-Y[i,])^2
-    ##First Column(Intecept), First Row value
-    X[i,j]
-    #J=1 gives our first intercept coefficient change for row 1.
-    j=1
-    theta[[i+1]]<-matrix()
-    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
-    #We need to update 3 more parameter updates for row 1 considering we have 4 independent variables
-    j=2
-    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
-    j=3
-    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
-    j=4
-    theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
-    theta[[i+1]]<-as.matrix(theta[[i+1]])
-    #Store this first iteration to check when you create loop to verify theta values.
-    Compare<-theta[[i+1]]
+#All right. Once we do code it in simple way, then we will see vectorized operations.
+iterations<-1
+m<-nrow(X)
+theta<-list()
+theta[[1]]<-as.matrix(c(0,0,0,0))
+alpha<-0.01
+#First row, start with first column j
+i=1
+j=1
+#First row predicted value for theta 0,0,0,0
+h_xi<-t(theta[[i]])%*%as.matrix(X[i,])
+
+#Check for Cost before updating theta values
+Cost<-numeric()
+
+#First Row actual value
+Y[i,]
+#Cost  of first row for the theta 0,0,0,0
+Cost[i]<-(1/2)*(h_xi-Y[i,])^2
+
+#J=1 gives our first intercept coefficient change for row 1.
+j=1
+##First Column(Intecept), First Row value
+X[i,j]
+
+theta[[i+1]]<-matrix()
+theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+#We need to update 3 more parameter updates for row 1 considering we have 4 independent variables
+j=2
+theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+j=3
+theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+j=4
+theta[[i+1]][[j]]<-theta[[i]][[j]]-alpha*(h_xi-Y[i,])*X[i,j]
+theta[[i+1]]<-as.matrix(theta[[i+1]])
+#Store this first iteration to check when you create loop to verify theta values.
+Compare<-theta[[i+1]]
+#Ok. Now for every row you get parameters equal to number of columns in feature.
+
 
 #Continue the same process above for all rows and plot the cost value.
 #In case of millions of rows, take the average of say 1000 rows and see plot makes sense.
@@ -564,48 +592,57 @@ k
 #If the graph shows diverging change learning rate.
 #And run for more iterations if needed! It is expected to get in one pass itself the optimal values.
 
-#Ok. You can always vectorize the code to reduce the number of lines. We will check that later.
+#Ok. You can always vectorize the code to reduce the number of lines.
 #Let us make a function out of it.
 
 get_sgd<-function(X,Y,rounds,alpha){
-    theta<-list()
-    Cost<-list()
-    J<-list()
-    rounds<-rounds
-    alpha<-alpha
+  #Shuffle the data.
+  
+  internal_mat<-cbind(X,Y)
+  #Shuffling
+  internal_mat<-internal_mat[sample.int(nrow(internal_mat)),]
+  X<-internal_mat[,1:(ncol(internal_mat)-1)]
+  Y<-as.matrix(internal_mat[,ncol(internal_mat)])
+  theta<-matrix()
+  Cost<-numeric()
+  Costdf<-data.frame()
+  J<-numeric()
+  rounds<-rounds
+  alpha<-alpha
+  theta<-matrix(0, ncol = 1, nrow = ncol(X))
   for(iterations in 1:rounds){
-        #We need to find theta for each row.#So we are expecting a matrices with 10 coulumns and 4 rows
-        Cost[[iterations]]<-matrix(0,nrow =nrow(Y),ncol = nrow(Y))
-        #Initialize theta iterations and update the first column with lastest update
-        theta[[iterations]]<-matrix(0, ncol = 1, nrow = ncol(X))
-        if(iterations>1){
-          k<-iterations-1
-          theta[[iterations]][,1]<-theta[[k]][,nrow(Y)+1]
-        }
-      for(i in 1:nrow(Y)){
-          h_xi<-X%*%(as.matrix(theta[[iterations]][,i]))
-          diff<-h_xi-Y
-          Cost[[iterations]][,i]<-(1/2)*(diff)^2
-          theta[[iterations]]<-cbind(theta[[iterations]],as.matrix(theta[[iterations]][,i])-alpha*t(diff[i,]%*%X[i,]))
-      }
-        #Store Cost Function J
-        J[[iterations]]<-colSums(Cost[[iterations]])/(2*m)
+    #Initialize theta iterations and update the first column with lastest update
+    for(i in 1:nrow(Y)){
+      h_xi<-t(theta)%*%as.matrix(X[i,])
+      diff<-h_xi-Y[i,]
+      Cost[i]<-(1/2)*(diff)^2
+      Costdf<-rbind(Costdf,data.frame(iterations,round(Cost[i])))
+      theta<-(as.matrix(theta)-alpha*t(diff%*%X[i,]))
+    }
+    
+    J[iterations]<-sum(Cost)/(nrow(X))
   }
-    result_list<-list()
-    result_list[[1]]<-J
-    result_list[[2]]<-theta
-    result_list[[3]]<-Cost
-    return(result_list)
+  result_list<-list()
+  result_list[[1]]<-Costdf
+  result_list[[2]]<-J
+  result_list[[3]]<-theta
+  return(result_list)
 }#End of function
 
-s<-get_sgd(X=X,Y=Y,rounds = 10,alpha = 0.001)
+s<-get_sgd(X=X,Y=Y,rounds = 100,alpha = 0.001)
 
 #Watch out for last few columns of results to see diverging or converging
-#s[[1]] : J Values
-s[[1]] 
-#s[[2]] : Theta Values
-s[[2]][[3]][,11]
-#[1] -0.2003791 -2.9100875  3.3814986 -0.9413313
+#s[[1]] : Costs over iterations
+plot((s[[1]]))
+#s[[2]] : J Values
+plot(s[[2]])
+#Looks like in 5th iteration itself we might have reached global minimum
+#Final theta at round 100.
+s[[3]]
+#Run only 4-5 iterations and find the theta there.
+round(get_sgd(X=X,Y=Y,rounds = 4,alpha = 0.001)[[3]])
+#We reached the goal in 4 iterations.
+
 
 #You can see the result is almost near to the correct solution is (-3,4,-1) for theta.X2,X3,X4.
 #Don't try to put effort to over fit it as stochastic gradient J goes in and around global minima
@@ -637,23 +674,14 @@ s[[1]]
 new_s[[1]]
 #You can see in iteration 5 somewhere in 6th value, J started to work around global  minimum
 
-    
-    #You can see manually done compare and via loop producing same results. Great!
-    s[[2]][[1]][,2]
-    Compare
-    #The correct solution is (-3,4,-1) for theta.X2,X3,X4.
-    
-    #You can see that in first iteration we have not yet reached there!
-    #Might be needing more iterations or less learning rate. We will see.
-    #Calculate cost for each row.
 
-    #Ok. Let us put all in a loop over iterations. Shall we?
-    
-    
-
+#You can see manually done compare and via loop producing same results. Great!
+s[[2]][[1]][,2]
+Compare
+#The correct solution is (-3,4,-1) for theta.X2,X3,X4.
 
 #After this next step is to work on Mini Batch Gradient Descent
-
+#instead of 1 at a time we will do sum over 10 at a time.
 
 
 #Problem 2: The existance of outliers and biased variables tend to affect regularization. We need to penalize our model to reduce these effects.
@@ -669,3 +697,34 @@ new_s[[1]]
 #Lasso Regression
 
 #Elastic Net
+
+#Anamoly Detection
+# setwd("D:/DataScience/2Course Era Data Science-Machiene Learning/coursera-stanford-master/coursera-stanford-master/machine_learning/exercises/matlab/machine-learning-ex8/ex8")
+# library(R.matlab)
+# anamolydatax<-data.frame(readMat("ex8data2.mat"))
+# summary(anamolydatax)
+# anamolydatax$yval<-as.factor(anamolydatax$yval)
+# 
+# library(h2o)
+# h2o.init(nthreads = -1)
+# anamolydata.hex<-as.h2o(anamolydatax)
+# h2o.frames<-h2o.splitFrame(data=anamolydata.hex,ratios = c(0.1,0.8))
+# summary(h2o.frames[[1]])#Valid
+# summary(h2o.frames[[2]])#Train
+# summary(h2o.frames[[3]])#Test
+# #Better to use stratified cross validation
+# features<-h2o.names(anamolydata.hex)[!h2o.names(anamolydata.hex) %in% "yval"]
+# y<-"yval"
+# gbm.imbalance<-h2o.gbm(
+#   training_frame = h2o.frames[[2]]
+#   ,validation_frame = h2o.frames[[1]]
+#   ,x=features
+#   ,y=y
+#   ,nfolds=10
+#   #,fold_assignment="Stratified"
+#   #,balance_classes=T
+#   ,seed=1234
+# )
+# gbm.imbalance
+# 
+
