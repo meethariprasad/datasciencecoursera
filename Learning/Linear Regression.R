@@ -654,34 +654,10 @@ round(get_sgd(X=X,Y=Y,rounds = 4,alpha = 0.001)[[3]])
 
 #Awesome. You can celebrate saying you had fun with SGD. Stochastic
 #But why that word stochasitc?
-#That is because random shuffling rule as step 1.
-#We have not put that in out function code.
-#Let us try it out to check out if convergence can be done soon
-data.df<-data.df[2:5]
-#Shuffle the data
-data.df<-data.df[sample(nrow(data.df)),]
-#Independent Variables +intercept term
-X<-cbind(Intercept=rep(1,nrow(data.df)),data.df[1:3])
-X<-as.matrix(X)
-#Dependent Variable
-Y<-as.matrix(data.df[4])
-new_s<-get_sgd(X=X,Y=Y,rounds = 10,alpha = 0.001)
-
-#Check the convergence on cost function.
-s[[1]]
-#Converging around iteration 5 somewhere in 3rd value, J started to work around global minimum
-
-new_s[[1]]
-#You can see in iteration 5 somewhere in 6th value, J started to work around global  minimum
-
-
-#You can see manually done compare and via loop producing same results. Great!
-s[[2]][[1]][,2]
-Compare
-#The correct solution is (-3,4,-1) for theta.X2,X3,X4.
+#That is because random shuffling rule as step 1 as well as random movement of gradient one row at a time towards minima
 
 #After this next step is to work on Mini Batch Gradient Descent
-#instead of 1 at a time we will do sum over 10 at a time.
+#instead of 1 at a time we will do sum over 10 at a time. It is in between batch and sgd.
 
 
 #Problem 2: The existance of outliers and biased variables tend to affect regularization. We need to penalize our model to reduce these effects.
